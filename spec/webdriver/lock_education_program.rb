@@ -39,7 +39,7 @@ RSpec.describe 'Selenium Webdriver Login' do
         wait_driver.until { driver.find_element(css: '.ant-message-custom-content.ant-message-success').displayed? }
         success_message = driver.find_element(xpath: '//div[@class="ant-message-custom-content ant-message-success"]/span[text()]').text
 
-        # screenshot driver, 'detail_training_program_success', screenshot_dir_path
+        screenshot driver, 'lock_training_program_success', screenshot_dir_path
 
         expect(success_message).to eql 'Đã khóa chương trình đào tạo'
       end
