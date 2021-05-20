@@ -11,3 +11,7 @@ def setup_driver(driver)
   driver.manage.window.move_to(0, 0)
   driver.manage.window.maximize
 end
+
+def custom_navigate(driver, url)
+  driver.navigate.to url
+end
