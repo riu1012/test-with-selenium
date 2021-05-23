@@ -41,6 +41,8 @@ RSpec.describe 'Selenium Webdriver Login' do
       sleep 1
     end
 
+    after { driver.quit }
+
     context 'When create success training program' do
       before do
         custom_navigate driver, create_training_program_url

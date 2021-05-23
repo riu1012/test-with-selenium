@@ -37,6 +37,8 @@ RSpec.describe 'Selenium Cource' do
       sleep 1
     end
 
+    after { driver.quit }
+
     context 'When create success cource' do
       before do
         custom_navigate driver, cources_list_url
