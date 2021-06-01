@@ -11,6 +11,7 @@ RSpec.describe 'Selenium Webdriver Login' do
   def submit_form(driver, email, password)
     driver.find_element(id: 'normal_login_username').send_keys email
     driver.find_element(id: 'normal_login_password').send_keys password
+    driver.find_element(id: 'normal_login_uetLogin').click
     screenshot driver, 'login', screenshot_dir_path
     driver.find_element(class: 'login-form-button').click
   end
