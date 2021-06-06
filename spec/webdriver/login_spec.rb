@@ -3,8 +3,8 @@ require "custom_helper"
 RSpec.describe 'Selenium Webdriver Login' do
   let!(:driver) { Selenium::WebDriver.for :chrome }
   let(:wait_driver) { Selenium::WebDriver::Wait.new timeout: 5 }
-  let(:login_url) { 'http://112.137.129.236:3000/uet/signin' }
-  let(:screenshot_dir_path) { 'C:\Users\tanhi\Desktop\riu' }
+  let(:login_url) { 'http://localhost:3000/uet/signin' }
+  let(:screenshot_dir_path) { '/home/tran.thi.anh.thu/selenium/screenshot' }
   let(:error_title) { 'Đăng nhập không thành công' }
   let(:error_message) { 'Email hoặc mật khẩu không đúng' }
   
@@ -60,7 +60,7 @@ RSpec.describe 'Selenium Webdriver Login' do
     context 'When valid email and password' do
       let(:email) { 'admin' }
       let(:password) { '1' }
-      let(:dashboard_url) { 'http://112.137.129.236:3000/uet/statistic' }
+      let(:dashboard_url) { 'http://localhost:3000/uet/statistic' }
 
       it "Should redirect to dashboard" do
         wait_driver.until { driver.find_element(class: 'ant-avatar-image').displayed? }

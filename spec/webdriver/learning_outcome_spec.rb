@@ -3,9 +3,9 @@ require "custom_helper"
 RSpec.describe 'Selenium Learning Outcome' do
   let!(:driver) { Selenium::WebDriver.for :chrome }
   let(:wait_driver) { Selenium::WebDriver::Wait.new timeout: 1 }
-  let(:login_url) { 'http://112.137.129.236:3000/uet/signin' }
-  let(:learning_outcome_list_url) { 'http://112.137.129.236:3000/uet/learning-outcomes' }
-  let(:screenshot_dir_path) { 'C:\Users\tanhi\Desktop\riu' }
+  let(:login_url) { 'http://localhost:3000/uet/signin' }
+  let(:learning_outcome_list_url) { 'http://localhost:3000/uet/learning-outcomes' }
+  let(:screenshot_dir_path) { '/home/tran.thi.anh.thu/selenium/screenshot' }
   let(:email) { 'admin' }
   let(:password) { '1' }
   

@@ -3,9 +3,9 @@ require "custom_helper"
 RSpec.describe 'Selenium Learning Outcome' do
   let!(:driver) { Selenium::WebDriver.for :chrome }
   let(:wait_driver) { Selenium::WebDriver::Wait.new timeout: 1 }
-  let(:login_url) { 'http://112.137.129.236:3000/uet/signin' }
-  let(:major_list_url) { 'http://112.137.129.236:3000/uet/majors' }
-  let(:screenshot_dir_path) { 'C:\Users\tanhi\Desktop\riu' }
+  let(:login_url) { 'http://localhost:3000/uet/signin' }
+  let(:major_list_url) { 'http://localhost:3000/uet/majors' }
+  let(:screenshot_dir_path) { '/home/tran.thi.anh.thu/selenium/screenshot' }
   let(:email) { 'admin' }
   let(:password) { '1' }
   
@@ -60,7 +60,7 @@ RSpec.describe 'Selenium Learning Outcome' do
 
         screenshot driver, 'create_major_success', screenshot_dir_path
 
-        expect(success_message).to eql 'Success'
+        expect(success_message).to eql 'Thành công'
       end
     end
 
@@ -84,7 +84,31 @@ RSpec.describe 'Selenium Learning Outcome' do
 
         screenshot driver, 'edit_major_success', screenshot_dir_path
 
-        expect(success_message).to eql 'Success'
+        expect(success_message).to eql 'Thành công'
+      end
+    end
+
+    context 'When edit unsuccessfully major' do
+      before do
+        custom_navigate driver, major_list_url
+        sleep 5
+        driver.find_element(xpath: '//td[@class="ant-table-cell" and text()="98234324"]/..//button[@class="ant-btn ant-btn-primary"]').click
+        sleep 2
+
+        # Edit major
+        input_xpath = '//div[@class="ant-modal-content"]//input[@id="form_in_modal_en_name"]'
+        driver.find_element(xpath: input_xpath).clear
+        driver.find_element(xpath: input_xpath).send_keys ''
+        driver.find_element(xpath: '//div[@class="ant-modal-content"]//button[@class="ant-btn ant-btn-primary"]//span[text()="Lưu"]').click
+      end
+
+      it "Should not create major" do 
+        wait_driver.until { driver.find_element(css: '.ant-message-custom-content.ant-message-success').displayed? }
+        success_message = driver.find_element(xpath: '//div[@class="ant-message-custom-content ant-message-success"]/span[text()]').text
+
+        screenshot driver, 'edit_major_unsuccessfully', screenshot_dir_path
+
+        expect(success_message).to eql 'Tạo không thành công'
       end
     end
 
@@ -103,7 +127,7 @@ RSpec.describe 'Selenium Learning Outcome' do
 
         screenshot driver, 'delete_major_success', screenshot_dir_path
 
-        expect(success_message).to eql 'Success'
+        expect(success_message).to eql 'Thành công'
       end
     end
   end    

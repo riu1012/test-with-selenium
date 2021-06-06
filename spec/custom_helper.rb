@@ -4,7 +4,7 @@ require "rspec"
 require "pry"
 
 def screenshot(driver, name, path)
-  driver.save_screenshot("#{path}\\#{name}_#{Time.now.to_i}.png")
+  driver.save_screenshot("#{path}/#{name}_#{Time.now.to_i}.png")
 end
 
 def setup_driver(driver)

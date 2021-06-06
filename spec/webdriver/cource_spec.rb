@@ -3,9 +3,9 @@ require "custom_helper"
 RSpec.describe 'Selenium Cource' do
   let!(:driver) { Selenium::WebDriver.for :chrome }
   let(:wait_driver) { Selenium::WebDriver::Wait.new timeout: 1 }
-  let(:login_url) { 'http://112.137.129.236:3000/uet/signin' }
-  let(:cources_list_url) { 'http://112.137.129.236:3000/uet/courses' }
-  let(:screenshot_dir_path) { 'C:\Users\tanhi\Desktop\riu' }
+  let(:login_url) { 'http://localhost:3000/uet/signin' }
+  let(:cources_list_url) { 'http://localhost:3000/uet/courses' }
+  let(:screenshot_dir_path) { '/home/tran.thi.anh.thu/selenium/screenshot' }
   let(:email) { 'admin' }
   let(:password) { '1' }
   
@@ -48,8 +48,6 @@ RSpec.describe 'Selenium Cource' do
         fill_cource_form driver, cource_data
       end
 
-      after { driver.quit }
-
       let(:cource_data) do 
 				{ course_name_vi: "Test học phần 1",
 					course_code: "Test_Cource_Code_1",
@@ -67,11 +65,46 @@ RSpec.describe 'Selenium Cource' do
       end
     end
 
+    context 'When create allspace cource' do
+      before do
+        custom_navigate driver, cources_list_url
+        sleep 2
+        driver.find_element(css: '.ant-btn.ant-btn-primary.ant-btn-circle.ant-btn-icon-only.ant-btn-dangerous').click
+        sleep 2
+        fill_cource_form driver, cource_data
+        sleep 2
+      end
+
+      let(:cource_data) do 
+				{ course_name_vi: "              ",
+					course_code: "Test_Cource_Code_2",
+          credits: 3
+				}
+			end
+
+      it "Should create unnsuccess cources" do
+        errors_message = {
+          course_name_vi: driver.find_element(xpath: '//input[@id="course_name_vi"]//ancestor::div[@class="ant-col ant-col-14 ant-col-offset-1 ant-form-item-control"]//div[@class="ant-form-item-explain ant-form-item-explain-error"]//div[@role="alert"]').text
+        }
+
+        expected_error_message = {
+          course_name_vi: 'Tên học phần không được bỏ trống'
+        }
+        screenshot driver, 'create_cource_success', screenshot_dir_path
+
+        expect(expected_error_message).to eql errors_message
+      end
+    end
+
     context 'When edit success cource' do
       before do
         custom_navigate driver, cources_list_url
         sleep 5
-        driver.find_element(xpath: '//span[text() = "Sửa"]//ancestor::a').click
+        driver.find_element(id: 'advanced_search_course_code').send_keys 'Test_Cource_Code_1'
+        sleep 2
+        driver.find_element(xpath: '//span[text()]//ancestor::button[@class="ant-btn ant-btn-primary"]').click
+        sleep 5
+        driver.find_element(xpath: '//td[text() = "Test_Cource_Code_1"]/..//span[text()="Sửa"]//ancestor::a').click
         sleep 2
 
         # Edit cource
@@ -93,7 +126,11 @@ RSpec.describe 'Selenium Cource' do
       before do
         custom_navigate driver, cources_list_url
         sleep 5
-        driver.find_element(xpath: '//span[text() = "Xoá"]//ancestor::a').click
+        driver.find_element(id: 'advanced_search_course_code').send_keys 'Test_Cource_Code_1'
+        sleep 2
+        driver.find_element(xpath: '//span[text()]//ancestor::button[@class="ant-btn ant-btn-primary"]').click
+        sleep 5
+        driver.find_element(xpath: '//td[text() = "Test_Cource_Code_1"]/..//span[text()="Xóa"]//ancestor::a').click
         sleep 2
         driver.find_element(xpath: '//div[@class="ant-popover ant-popconfirm ant-popover-placement-top "]//button[@class="ant-btn ant-btn-primary ant-btn-sm"]').click
       end
