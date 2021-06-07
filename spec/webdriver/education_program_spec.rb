@@ -69,6 +69,11 @@ RSpec.describe 'Selenium Webdriver Login' do
       before do
         custom_navigate driver, training_program_url
         sleep 2
+        # Tim kiem CTDT vua tao
+        input = driver.find_element xpath: '//input[@class="ant-input ant-input-lg" and @placeholder="Tìm kiếm chương trình đào tạo"]'
+        input.send_keys 'Test tên ngành 1'
+        driver.find_element(xpath: '//button[@class="ant-btn ant-btn-primary ant-btn-lg ant-input-search-button"]').click
+        sleep 5
       end
 
 
@@ -87,6 +92,11 @@ RSpec.describe 'Selenium Webdriver Login' do
       before do
         custom_navigate driver, training_program_url
         sleep 2
+        # Tim kiem CTDT vua tao
+        input = driver.find_element xpath: '//input[@class="ant-input ant-input-lg" and @placeholder="Tìm kiếm chương trình đào tạo"]'
+        input.send_keys 'Test tên ngành 1'
+        driver.find_element(xpath: '//button[@class="ant-btn ant-btn-primary ant-btn-lg ant-input-search-button"]').click
+        sleep 5
         driver.find_element(css: '.anticon.anticon-edit').click
         sleep 2
 
@@ -108,9 +118,14 @@ RSpec.describe 'Selenium Webdriver Login' do
       before do
         custom_navigate driver, training_program_url
         sleep 2
+        # Tim kiem CTDT vua tao
+        input = driver.find_element xpath: '//input[@class="ant-input ant-input-lg" and @placeholder="Tìm kiếm chương trình đào tạo"]'
+        input.send_keys 'Test tên ngành 1'
+        driver.find_element(xpath: '//button[@class="ant-btn ant-btn-primary ant-btn-lg ant-input-search-button"]').click
+        sleep 5
         driver.find_element(css: '.anticon.anticon-delete').click
         sleep 1
-        driver.find_element(css: '.ant-btn.ant-btn-primary.ant-btn-sm').click
+        driver.find_element(xpath: '//span[text()="Xóa"]/ancestor::button[@class="ant-btn ant-btn-primary ant-btn-sm"]').click
       end
 
       it "Should alert message success training programs" do 
